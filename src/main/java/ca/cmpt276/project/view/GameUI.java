@@ -54,6 +54,8 @@ public class GameUI extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500, 500);
         this.setContentPane(mainPanel);
+        ImageIcon icon = new ImageIcon("gameIcon.png");
+        this.setIconImage(icon.getImage());
         mainPanel.add(startGameButton);
         mainPanel.add(exitGameButton);
 

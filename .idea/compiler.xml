@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Game" />
+        <module name="CMPT371-Group7" />
       </profile>
     </annotationProcessing>
   </component>
