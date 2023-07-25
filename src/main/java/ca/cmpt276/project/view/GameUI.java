@@ -472,7 +472,7 @@ public class GameUI extends JFrame implements ActionListener {
         JLabel playerSprite = displayPlayer(system.getMainCharacter().getPosition().getX(), (system.getMainCharacter().getPosition().getY()));
         add(playerSprite);
         gamePanel.add(playerSprite);
-        redisplayOtherComponents();
+        rerenderOtherComponents();
 
         gamePanel.repaint();
     }
@@ -489,7 +489,7 @@ public class GameUI extends JFrame implements ActionListener {
         gamePanel.add(playerSprite);
         add(playerSprite);
 
-        redisplayOtherComponents();
+        rerenderOtherComponents();
 
         gamePanel.revalidate();
         gamePanel.repaint();
@@ -506,7 +506,7 @@ public class GameUI extends JFrame implements ActionListener {
         add(playerSprite);
         gamePanel.add(playerSprite);
 
-        redisplayOtherComponents();
+        rerenderOtherComponents();
 
         gamePanel.revalidate();
         gamePanel.repaint();
@@ -523,7 +523,7 @@ public class GameUI extends JFrame implements ActionListener {
         add(playerSprite);
         gamePanel.add(playerSprite);
 
-        redisplayOtherComponents();
+        rerenderOtherComponents();
 
         gamePanel.revalidate();
         gamePanel.repaint();
@@ -562,18 +562,30 @@ public class GameUI extends JFrame implements ActionListener {
         //Remove all current object on the game panel
         gamePanel.removeAll();
         //Redrawing playerSprite using their current position
-        JLabel playerSprite = displayPlayer(system.getMainCharacter().getPosition().getX(), system.getMainCharacter().getPosition().getY());
-        add(playerSprite);
-        gamePanel.add(playerSprite);
+        rerenderPlayerSprite();
         //Drawing Pokeball based on the parameter x and y coordination, this coordination is calculated in throwPokeball() method, so it can move up, down, left and right
         JLabel pokeballSprite = displayPokeball(x, y);
         add(pokeballSprite);
         gamePanel.add(pokeballSprite);
         //Redisplay other components in the game panel
-        redisplayOtherComponents();
+        rerenderOtherComponents();
         gamePanel.repaint();
+        ActionListener catchingPokemon = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                gamePanel.removeAll();
+                //Redrawing playerSprite using their current position
+                rerenderPlayerSprite();
+                rerenderOtherComponents();
+                gamePanel.repaint();
+                System.out.println("Reading SMTP Info.");
+            }
+        };
+        //A delay to simulate catching the Pokemon and delete the Pokeball sprite when it finished "catching"
+        Timer timer = new Timer(200 ,catchingPokemon);
+        timer.setRepeats(false);
+        timer.start();
     }
-    private void redisplayOtherComponents() {
+    private void rerenderOtherComponents() {
         //Redraw everything so that the player remains on the top most layer
         if (system.getMainCharacter().getScore() <= 0) { //If player reached score 0 after moving then display death screen
             deathScreen();
@@ -606,6 +618,11 @@ public class GameUI extends JFrame implements ActionListener {
         gamePanel.add(mapScene);
     }
 
+    private void rerenderPlayerSprite(){
+        JLabel playerSprite = displayPlayer(system.getMainCharacter().getPosition().getX(), system.getMainCharacter().getPosition().getY());
+        add(playerSprite);
+        gamePanel.add(playerSprite);
+    }
     /**
      * Helper method to check if player just entered a cell with a reward in it, if yes then remove that reward from
      * rewardList
