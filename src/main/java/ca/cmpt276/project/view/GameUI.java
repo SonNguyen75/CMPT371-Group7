@@ -115,15 +115,12 @@ public class GameUI extends JFrame implements ActionListener {
                 if (key == KeyEvent.VK_W) {
                     result = system.CheckingItems("up");
                     system.BonusUpdate();
-                    if (result.equals("Move")){
-                        moveCharacterUp();
-                    }
-                    else if (result.equals("Reward")){
-                        moveCharacterUp();
-                    }
-                    else if (result.equals("Death")){
-                        //Game over
-                        deathScreen();
+                    switch (result) {
+                        case "Move" -> moveCharacterUp();
+                        case "Reward" -> moveCharacterUp();
+                        case "Death" ->
+                                //Game over
+                                deathScreen();
                     }
                     system.BonusUpdate();
                 }
